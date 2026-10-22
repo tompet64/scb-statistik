@@ -160,6 +160,14 @@ def test_education_acceptance_cases_are_registered():
     assert "TAB3732" in acceptance
 
 
+def test_regional_accounts_acceptance_cases_are_registered():
+    acceptance = (SKILL / "docs" / "scb-statistik-acceptance.md").read_text(encoding="utf-8")
+    assert "### R1 — Regional production versus resident household income" in acceptance
+    assert "### R2 — Municipal coverage, units and revisions" in acceptance
+    assert "NR0105ENS2010T01A" in acceptance
+    assert "NR0105ENS2010T02B" in acceptance
+
+
 @pytest.mark.parametrize("text", [
     "name: example\ndescription: text",  # No delimiters.
     "---\nname: [\ndescription: text\n---\n",  # Invalid YAML.
