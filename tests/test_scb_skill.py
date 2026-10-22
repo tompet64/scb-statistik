@@ -168,6 +168,14 @@ def test_regional_accounts_acceptance_cases_are_registered():
     assert "NR0105ENS2010T02B" in acceptance
 
 
+def test_housing_acceptance_cases_are_registered():
+    acceptance = (SKILL / "docs" / "scb-statistik-acceptance.md").read_text(encoding="utf-8")
+    assert "### HOU1 — Household housing form versus dwelling stock" in acceptance
+    assert "### HOU2 — Housing area versus overcrowding" in acceptance
+    assert "### HOU3 — Housing costs and coverage" in acceptance
+    assert all(code in acceptance for code in ("HE0111", "BO0104", "HE0202"))
+
+
 @pytest.mark.parametrize("text", [
     "name: example\ndescription: text",  # No delimiters.
     "---\nname: [\ndescription: text\n---\n",  # Invalid YAML.
