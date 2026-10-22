@@ -153,3 +153,23 @@ BRP is production located in the region; per-resident BRP is influenced by commu
 **Question:** Vilken SCB-tabell kan visa BRP respektive hushållens disponibla inkomster för Växjö kommun 2024, och kan jag jämföra inkomstökningen 2022–2024 i fasta priser?
 
 **Reference:** The current municipal BRP candidate is `NR0105ENS2010T06A` / CSV `TAB3143` / matrix `NR0105AW` (2012–2024). The municipal household-income candidate is `NR0105ENS2010T02B` / CSV `TAB3463` / matrix `000001ZT` (2000–2024). Both include current-price totals and current-price tkr per resident; do not report these as constant-price series. The household-income table notes that 2022–2024 were corrected on 2026-06-26, so values must be retrieved from current metadata. If a real income change is requested, explain that the current regional-accounts table does not supply a fixed-price household-income series; do not call nominal growth real growth or silently substitute BRP volume change.
+
+## Housing and dwelling questions
+
+### HOU1 — Household housing form versus dwelling stock
+
+**Question:** Hur många hushåll i Uppsala kommun bodde i småhus respektive flerbostadshus 2025, och hur många bostadslägenheter av respektive hustyp fanns där?
+
+**Reference:** Resolve a current HE0111 household table and a BO0104 dwelling-stock table from live metadata. Return households from HE0111 and dwellings from BO0104, each for Uppsala municipality and reference year 2025, with the exact requested building-type categories and published units. These counts are different statistical units and must not be equated. State that HE0111 describes households' housing form, while BO0104 counts dwellings in the stock; BO0104's tenure classification is based on ownership relations, not actual household occupancy arrangements. Record live table IDs, category codes and values during the run; no frozen count has been independently validated here.
+
+### HOU2 — Housing area versus overcrowding
+
+**Question:** Vilken genomsnittlig bostadsarea per person hade hushåll i Malmö 2025, och hur många personer var trångbodda enligt norm 2 samma år?
+
+**Reference:** Resolve the current HE0111 table for average housing area per person and the current norm-2 overcrowding table from live metadata. Report square metres per person as an average, and the overcrowding measure in persons using its published definition. Confirm whether the norm-2 table includes only residents of multi-dwelling buildings and verify its age and geography dimensions. Do not infer the number of overcrowded persons from average floor area, substitute an old HEK norm-3 series, or generalize a multi-dwelling-building measure to all housing. Record current table IDs, selections and values; no frozen value is certified here.
+
+### HOU3 — Housing costs and coverage
+
+**Question:** Hur stor andel av den disponibla inkomsten gick till boendeutgifter för ensamstående med barn 2024, och kan värdet beskriva alla hushåll i Sverige?
+
+**Reference:** Resolve the current HE0202 table and category for single-adult households with children, using the table's published housing-cost percentage and reference year 2024. Identify whether the table reports a mean or median, state the denominator as household disposable income, and include any price/reference basis specified by the table. Explain that HE0202 covers selected common arrangements (owner-occupied single-family homes, tenant-owned apartments and first-hand rentals), not all households or housing contracts. Do not substitute the household's income or an individual-level income measure. Record table ID, categories and value from the live response; no frozen value is certified here.

@@ -1,6 +1,6 @@
 ---
 name: scb-statistik
-description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), education and study participation, regional accounts (regionalräkenskaper, BRP, regional household disposable income, wages, employment and investment), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
+description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), housing and dwelling conditions (boende och bostadsförhållanden, boendeform, housing space, overcrowding, housing stock and housing costs), education and study participation, regional accounts (regionalräkenskaper, BRP, regional household disposable income, wages, employment and investment), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
 ---
 
 # SCB-statistik
@@ -47,6 +47,10 @@ Distinguish the population's highest attained education in the Education Registe
 
 For regional economic output, income, wages, employment or investment, use `references/regional-accounts-workflow.md`. Choose the measure and geography first: BRP measures production in the region, while regional household disposable income is a resident household-sector income measure. Do not treat BRP per resident as residents' income or household disposable income per resident as an income-distribution measure. Resolve current table names, IDs and notes from live metadata.
 
+## Boende och bostadsförhållanden starter method
+
+For housing questions, first identify whether the user means households' actual housing arrangements and housing space (HE0111), the dwelling stock and its structural attributes (BO0104), housing expenditure and its relation to income (HE0202), or a specific overcrowding measure. Use `references/housing-workflow.md` to distinguish units, coverage, geography, survey/register sources and limitations. Treat remembered table IDs as discovery clues and resolve current metadata. Do not equate dwelling-stock tenure categories with the way residents occupy a dwelling, or treat housing costs as covering all households.
+
 ## BAS starter method
 
 For questions about the registered population's employment, unemployment or other labor-market status, use `references/bas-workflow.md`. Distinguish BAS from AKU's ILO unemployment measure and from Arbetsförmedlingen's registered-unemployed statistics; match age, geography and preliminary/final status before comparing periods.
@@ -84,6 +88,7 @@ Whenever adding support for a statistical product or subject, update `SKILL.md` 
 - `references/income-workflow.md` — household disposable income, economic standard, price basis, population and income-series comparability.
 - `references/education-workflow.md` — highest attained education (UREG), study participation (RPU), SUN classifications and education-series comparability.
 - `references/regional-accounts-workflow.md` — regional accounts (BRP, household disposable income, wages, employment and investment), geography, prices and comparability.
+- `references/housing-workflow.md` — household housing, housing stock, housing expenditure, housing space and overcrowding measures, coverage and comparability.
 - `references/migration-workflow.md` — domestic/international migration, in-/outflow and net-migration semantics, table selection and comparability.
 - `references/pxstatspy-assessment.md` — when the optional Python library is useful.
 - `references/OpenAPI-source.md` — provenance and version details for the included contract.
