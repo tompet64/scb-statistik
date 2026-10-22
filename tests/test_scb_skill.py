@@ -176,6 +176,15 @@ def test_housing_acceptance_cases_are_registered():
     assert all(code in acceptance for code in ("HE0111", "BO0104", "HE0202"))
 
 
+def test_aku_acceptance_cases_are_registered():
+    acceptance = (SKILL / "docs" / "scb-statistik-acceptance.md").read_text(encoding="utf-8")
+    assert "### AKU1 — Annual labor-market indicators and denominators" in acceptance
+    assert "### AKU2 — Education-dimension quality flag" in acceptance
+    assert "### AKU3 — AKU versus BAS and geographic detail" in acceptance
+    assert "5,263,000" in acceptance
+    assert "retroactively to 2012" in acceptance
+
+
 @pytest.mark.parametrize("text", [
     "name: example\ndescription: text",  # No delimiters.
     "---\nname: [\ndescription: text\n---\n",  # Invalid YAML.
