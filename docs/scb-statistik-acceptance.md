@@ -1,6 +1,6 @@
 # Statistical acceptance cases for scb-statistik
 
-Use these cases alongside the existing offline document checks, not as a replacement for them. Numeric reference values, where included, were retrieved from SCB PxWebApi v2 on **2026-10-22**. They are dated published values, including disclosure protection where applicable; revisions must be reviewed rather than treated automatically as regressions. BAS case B1 is a source-selection and interpretation check without a frozen numeric value; record the live API response during its acceptance run.
+Use these cases alongside the existing offline document checks, not as a replacement for them. Numeric reference values in the household, commuting and migration cases were retrieved from SCB PxWebApi v2 on **2026-10-22**. Regional-accounts case R1 instead uses the values in SCB's published 2024 release, cited in that case. References are dated published values, including disclosure protection where applicable; revisions must be reviewed rather than treated automatically as regressions. BAS case B1 is a source-selection and interpretation check without a frozen numeric value; record the live API response during its acceptance run.
 
 ## Run and assess
 
@@ -131,3 +131,25 @@ Keep `tests/test_scb_skill.py` and its network block intact. Reuse fixtures and 
 **Question:** Hur många personer i Västra Götalands län i åldern 16–64 år deltog i högskoleutbildning under höstterminen 2024, uppdelat efter kön?
 
 **Reference:** Resolve the current RPU table and live category codes. `StudiedeltagandeK` / `TAB3732` / matrix `UF0507B2` is a current candidate with region, sex, age, study-participation type and year. Select Västra Götalands län, the 16–64 total if present, the category for higher education and 2024. Return people, not registrations or course instances, and identify the observation as autumn-term participation with reference date 31 December. Record the actual API table ID, selected codes and response when running this case; no frozen count has been independently verified here. If a person can be assigned to only one study type, do not sum the categories as separate enrollments.
+
+## Regional accounts questions
+
+### R1 — Regional production versus resident household income
+
+**Question:** Jämför Stockholms och Hallands län 2024 med avseende på BRP per invånare, BRP per sysselsatt och hushållens disponibla inkomst per invånare. Vilket mått beskriver bäst invånarnas inkomster?
+
+**Reference:** Resolve the current ENS2010 tables and confirm region, measure, year and price basis. `NR0105ENS2010T01A` / CSV `TAB3138` / matrix `NR0105AH` is the county/riksområde BRP table; `NR0105ENS2010T02A` / CSV `TAB3139` / matrix `NR0105AN` is the household-income table. For 2024, [SCB's official release](https://www.scb.se/hitta-statistik/statistik-efter-amne/nationalrakenskaper/nationalrakenskaper/regionalrakenskaper/pong/statistiknyhet/regionalrakenskaper-2024/) publishes (current-price tkr):
+
+| Measure | Stockholm | Halland |
+| --- | ---: | ---: |
+| BRP per resident | 858 | 460 |
+| BRP per employed person | 1 506 | 999 |
+| Household disposable income per resident | 332 | 292 |
+
+BRP is production located in the region; per-resident BRP is influenced by commuting and is not resident income. Household disposable income per resident is the closest of these three to average resident household-sector income, but it is not a median, distribution, equivalised standard or direct measure of every household's income. Values are in current prices. The 2024 release is published 2026-06-24; check the live table and note revisions before using values in a later rerun.
+
+### R2 — Municipal coverage, units and revisions
+
+**Question:** Vilken SCB-tabell kan visa BRP respektive hushållens disponibla inkomster för Växjö kommun 2024, och kan jag jämföra inkomstökningen 2022–2024 i fasta priser?
+
+**Reference:** The current municipal BRP candidate is `NR0105ENS2010T06A` / CSV `TAB3143` / matrix `NR0105AW` (2012–2024). The municipal household-income candidate is `NR0105ENS2010T02B` / CSV `TAB3463` / matrix `000001ZT` (2000–2024). Both include current-price totals and current-price tkr per resident; do not report these as constant-price series. The household-income table notes that 2022–2024 were corrected on 2026-06-26, so values must be retrieved from current metadata. If a real income change is requested, explain that the current regional-accounts table does not supply a fixed-price household-income series; do not call nominal growth real growth or silently substitute BRP volume change.
