@@ -173,3 +173,23 @@ BRP is production located in the region; per-resident BRP is influenced by commu
 **Question:** Hur stor andel av den disponibla inkomsten gick till boendeutgifter för ensamstående med barn 2024, och kan värdet beskriva alla hushåll i Sverige?
 
 **Reference:** Resolve the current HE0202 table and category for single-adult households with children, using the table's published housing-cost percentage and reference year 2024. Identify whether the table reports a mean or median, state the denominator as household disposable income, and include any price/reference basis specified by the table. Explain that HE0202 covers selected common arrangements (owner-occupied single-family homes, tenant-owned apartments and first-hand rentals), not all households or housing contracts. Do not substitute the household's income or an individual-level income measure. Record table ID, categories and value from the live response; no frozen value is certified here.
+
+## AKU questions
+
+### AKU1 — Annual labor-market indicators and denominators
+
+**Question:** Hur många sysselsatta och arbetslösa fanns i Sverige 2025 enligt AKU, och vad var sysselsättningsgraden respektive arbetslöshetstalet?
+
+**Reference:** Resolve the current annual AKU tables and verify the population and age group. SCB's [published 2025 annual release](https://www.scb.se/hitta-statistik/statistik-efter-amne/arbetsmarknad/utbud-av-arbetskraft/arbetskraftsundersokningarna-aku/pong/statistiknyhet/arbetskraftsundersokningarna-aku-2025/) reports 5,263,000 employed people, an employment rate of 69.0 percent, 510,000 unemployed people and an unemployment rate of 8.8 percent. Identify these as annual estimates, normally ages 15–74 in this release. State that the unemployment rate denominator is the labor force, while the employment-rate denominator is the population in the stated age group. Recheck current table values, revision notes and units during a live run; do not assume the published release and current database extract cannot differ after revisions.
+
+### AKU2 — Education-dimension quality flag
+
+**Question:** Kan jag ta fram antal arbetslösa i AKU efter utbildningsnivå för 2025 och jämföra grupperna?
+
+**Reference:** Inspect the current table notes and AKU quality documentation. SCB states that count estimates by education level and education field are dotted from 2026 Q1 retroactively to 2012 because of quality problems; relative estimates are not dotted under the stated method. Do not invent, interpolate or reconstruct unavailable count estimates. Explain that other dimensions or relative measures may remain usable only if the current table and documentation support them. Record the live table and note used.
+
+### AKU3 — AKU versus BAS and geographic detail
+
+**Question:** Kan jag jämföra AKU:s arbetslöshetstal för Malmö kommun med BAS och AF:s inskrivna arbetslösa?
+
+**Reference:** Resolve the current AKU geography and age dimensions and explain any unsupported municipal breakdown; do not generate a municipal AKU estimate if the table does not publish it. Distinguish AKU's ILO-based sample-survey measure from BAS's administrative-register classification and Arbetsförmedlingen's registered jobseekers. Compare only after aligning period, age, geography and denominator, and label the sources and concepts separately. A BAS municipality value cannot be presented as an AKU figure. No numeric cross-source comparison has been validated by this case.
