@@ -185,6 +185,15 @@ def test_aku_acceptance_cases_are_registered():
     assert "retroactively to 2012" in acceptance
 
 
+def test_enterprise_economy_acceptance_cases_are_registered():
+    acceptance = (SKILL / "docs" / "scb-statistik-acceptance.md").read_text(encoding="utf-8")
+    assert "### FEK1 — Enterprise unit, industry and accounting measures" in acceptance
+    assert "### FEK2 — County activity versus enterprise headquarters" in acceptance
+    assert "### FEK3 — Statistical-unit and product boundary" in acceptance
+    assert "NV0109" in acceptance
+    assert "NV1001" in acceptance
+
+
 @pytest.mark.parametrize("text", [
     "name: example\ndescription: text",  # No delimiters.
     "---\nname: [\ndescription: text\n---\n",  # Invalid YAML.

@@ -193,3 +193,23 @@ BRP is production located in the region; per-resident BRP is influenced by commu
 **Question:** Kan jag jämföra AKU:s arbetslöshetstal för Malmö kommun med BAS och AF:s inskrivna arbetslösa?
 
 **Reference:** Resolve the current AKU geography and age dimensions and explain any unsupported municipal breakdown; do not generate a municipal AKU estimate if the table does not publish it. Distinguish AKU's ILO-based sample-survey measure from BAS's administrative-register classification and Arbetsförmedlingen's registered jobseekers. Compare only after aligning period, age, geography and denominator, and label the sources and concepts separately. A BAS municipality value cannot be presented as an AKU figure. No numeric cross-source comparison has been validated by this case.
+
+## Företagens ekonomi questions
+
+### FEK1 — Enterprise unit, industry and accounting measures
+
+**Question:** Hur många företag inom transport och magasinering (SNI 49–53) fanns 2024, och vad var deras nettoomsättning, förädlingsvärde och antal anställda?
+
+**Reference:** Resolve a current FEK table for företagsenhet and SNI 2007 from live metadata. Select the correct SNI categories covering 49–53 without double-counting totals, and the requested reference year 2024. Report the unit exactly as published (for example, average employees/full-time equivalents if indicated), financial units and current- or fixed-price basis. Explain that since reference year 2022 FEK's företagsenhet may consist of multiple legal units and is not necessarily a single registered legal company. Record live table ID, category codes and observations; no frozen values are certified here.
+
+### FEK2 — County activity versus enterprise headquarters
+
+**Question:** I vilket län var förädlingsvärdet störst inom transport och magasinering 2024, och visar det var företagens huvudkontor ligger?
+
+**Reference:** Use the current regional FEK table for local verksamhetsenheter (LVE), county and the matching SNI categories. Report the table's value-added unit and price basis. Explain that this is a regional distribution of local activity, not a distribution of enterprise-level accounts by head-office location. Do not claim municipal detail from a county table or sum local-unit values to reconstruct the enterprise-unit total. Record current table, selections and values; no frozen county ranking has been independently validated here.
+
+### FEK3 — Statistical-unit and product boundary
+
+**Question:** Kan jag tolka förändringen i antal företag och förädlingsvärde mellan 2021 och 2022 som en direkt jämförbar utveckling, och använder Företagens ekonomi samma definition av nya och nedlagda företag som Företagens demografi?
+
+**Reference:** Flag the 2022 change to FE, VE and LVE and check whether the exact measure has a documented comparable or linked series. State that 2022 onward enterprise units may differ from the earlier legal-unit presentation; do not assume a direct like-for-like comparison. Explain that FEK measures annual economic structure and accounting results, while enterprise births/deaths and active-firm demography belong to the separate NV1001 product with statistical responsibility assigned to Tillväxtanalys. Do not interpret aggregate FEK change as a causal policy effect.
