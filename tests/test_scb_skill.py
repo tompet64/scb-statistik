@@ -152,6 +152,14 @@ def test_skill_workflow_numbering():
     validate_steps((SKILL / "SKILL.md").read_text(encoding="utf-8"))
 
 
+def test_education_acceptance_cases_are_registered():
+    acceptance = (SKILL / "docs" / "scb-statistik-acceptance.md").read_text(encoding="utf-8")
+    assert "### E1 — Highest recorded education" in acceptance
+    assert "### E2 — Participation in studies during a term" in acceptance
+    assert "TAB3981" in acceptance
+    assert "TAB3732" in acceptance
+
+
 @pytest.mark.parametrize("text", [
     "name: example\ndescription: text",  # No delimiters.
     "---\nname: [\ndescription: text\n---\n",  # Invalid YAML.

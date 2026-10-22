@@ -117,3 +117,17 @@ Keep `tests/test_scb_skill.py` and its network block intact. Reuse fixtures and 
 **Question:** Hur många arbetslösa personer fanns i Malmö kommun i december 2025, och kan siffran jämföras direkt med AKU:s arbetslöshetstal?
 
 **Reference:** Resolve the current preliminary monthly BAS table and its live metadata. Select Malmö municipality, reference month 2025M12, the table's total-age category matching its population (generally registered residents aged 15–74), and the BAS status `arbetslös`. Report a count in persons, identify the value as preliminary BAS, and explain that it is not directly comparable with AKU's ILO unemployment measure or Arbetsförmedlingen's registered-unemployed count. Check the latest revision notice for the selected observation. This case tests source, population and measure selection; record the API response, current table ID and returned value when performing a live acceptance run rather than freezing a value in this document.
+
+## Education questions
+
+### E1 — Highest recorded education
+
+**Question:** Hur många personer i Uppsala län i åldern 16–74 år hade eftergymnasial utbildning om minst tre år 2025, uppdelat efter kön?
+
+**Reference:** Resolve the current UREG table and live category codes. `Utbildning` / `TAB3981` / matrix `UF0506A1` is a current candidate with region, age, education level, sex and year. Select Uppsala län, the table's 16–74 total if present, the matching SUN level, women and men, and 2025. Return counts in persons and identify the 31 December reference date. If the exact age total is absent, use only a documented, non-overlapping aggregation or explain that the requested cut is unavailable. Record the actual API table ID, codes and response when running this case; no frozen count has been independently verified here. The answer must not imply every foreign, private, company-internal or older qualification is necessarily observed.
+
+### E2 — Participation in studies during a term
+
+**Question:** Hur många personer i Västra Götalands län i åldern 16–64 år deltog i högskoleutbildning under höstterminen 2024, uppdelat efter kön?
+
+**Reference:** Resolve the current RPU table and live category codes. `StudiedeltagandeK` / `TAB3732` / matrix `UF0507B2` is a current candidate with region, sex, age, study-participation type and year. Select Västra Götalands län, the 16–64 total if present, the category for higher education and 2024. Return people, not registrations or course instances, and identify the observation as autumn-term participation with reference date 31 December. Record the actual API table ID, selected codes and response when running this case; no frozen count has been independently verified here. If a person can be assigned to only one study type, do not sum the categories as separate enrollments.
