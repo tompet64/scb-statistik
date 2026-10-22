@@ -11,6 +11,12 @@ Use this guide for consumer price change, inflation and indexation questions. Th
 
 Resolve whether the user asks for an index level, month-on-month change, year-on-year inflation rate, annual average or a COICOP-group contribution. State the period and calculation basis. The monthly change compares with the previous month; inflation rate normally compares with the same month a year earlier. An index level such as 125.94 is not an inflation rate of 125.94 percent.
 
+## Shadow index and finalized KPI values
+
+Do not treat **KPI, skuggindex** and **KPI, fastställda tal** as synonyms or as different inflation measures like KPI and KPIF. The finalized total KPI index value is formally fixed after publication for the month and is not reconsidered later; SCB says those finalized values are the ones to use when laws, regulations or contracts refer to KPI. The current month's value can appear in the table before that formal fixing has taken place.
+
+SCB adjusts the shadow index to address certain shortcomings in the price data or calculation methods underlying the finalized values, so that the series is consistent with similarly adjusted main and subgroup indices. It differs from the finalized total index in some months. SCB calculates monthly and 12-month changes using the shadow index, to two decimals before publishing the changes. Therefore a percentage change may not be exactly reproduced by taking the ratio of the two-decimal finalized total indices; this is not by itself evidence of an error or a different inflation concept. Check the table's notes and distinguish the finalized index levels from changes calculated on the shadow index.
+
 ## Find current tables and preserve classification
 
 Search current PxWeb metadata for short phrases such as `KPI totalt månad 2020=100`, `KPI COICOP månad`, `KPIF månad` or the requested measure plus product group. Current KPI table families include total index, COICOP groups, detailed COICOP, special aggregates, finalized annual/monthly values, KPIF and HIKP. Resolve the live table ID, units, period coverage, category codes and notes; remembered IDs are discovery clues only.

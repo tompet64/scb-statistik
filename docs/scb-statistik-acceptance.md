@@ -224,13 +224,19 @@ These cases cover Konsumentprisindex (`PR0101`) and closely related inflation me
 
 **Question:** Hur förändrades KPI från augusti till september 2026, hur stor var inflationstakten, och hur skiljde sig KPIF?
 
-**Reference:** SCB's published September 2026 release reports KPI (2020=100) 125.94, monthly change 0.9 percent and annual change 1.1 percent; KPIF (2020=100) 124.50, monthly change 0.9 percent and annual change 1.5 percent. KPIF-XE's annual change was 0.5 percent. Explain that monthly change compares to August, annual change compares to September 2025, and KPIF holds mortgage interest rates constant while KPI captures their changes. Identify the figures as published release values and recheck current metadata if answering from PxWeb; do not treat index levels as rates.
+**Reference:** SCB's published September 2026 release reports KPI (2020=100) 125.94, monthly change 0.9 percent and annual change 1.1 percent; KPIF (2020=100) 124.50, monthly change 0.9 percent and annual change 1.5 percent. KPIF-XE's annual change was 0.5 percent. Explain that monthly change compares to August, annual change compares to September 2025, and KPIF holds mortgage interest rates constant while KPI captures their changes. SCB's PxWeb notes say the KPI monthly and 12-month changes are calculated using the shadow index; the finalized index level is a separate value. Identify the figures as published release values and recheck current metadata if answering from PxWeb; do not treat index levels as rates.
 
 ### KPI2 — Contract indexation
 
 **Question:** Hur räknar jag upp ett belopp enligt KPI mellan september 2025 och september 2026?
 
 **Reference:** Use SCB's finalized total KPI index for the two specified months on a consistent base/series, not KPIF or the annual inflation-rate column. The finalized table reports 124.51 for September 2025 and 125.94 for September 2026 on the 2020=100 scale; the ratio implies an increase of about 1.15 percent before any contract-specific rounding. State the formula and confirm that a real contract's reference month, index version and rounding rule govern. Do not substitute a rounded annual percentage if the contract specifies an index ratio.
+
+### KPI5 — Shadow index versus finalized index
+
+**Question:** Varför blir den publicerade månadsförändringen inte alltid exakt samma som förändringen jag räknar fram från två fastställda KPI-tal?
+
+**Reference:** Explain that SCB's reported monthly and 12-month changes are calculated from the shadow index, while the finalized total index values are formally fixed and used for legal or contractual KPI indexation. Shadow-index values are adjusted for certain shortcomings in the underlying price data or methods and can differ from finalized values in some months. Differences can also reflect that published index levels and rates have different decimal precision. Do not present the shadow index as KPIF or as a replacement for the finalized values in contractual indexation.
 
 ### KPI3 — Classification break and historical series
 
