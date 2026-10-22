@@ -196,6 +196,8 @@ BRP is production located in the region; per-resident BRP is influenced by commu
 
 ## Företagens ekonomi questions
 
+These cases cover SCB's `Företagens ekonomi` (`NV0109`), not the separate enterprise-demography product `NV1001`.
+
 ### FEK1 — Enterprise unit, industry and accounting measures
 
 **Question:** Hur många företag inom transport och magasinering (SNI 49–53) fanns 2024, och vad var deras nettoomsättning, förädlingsvärde och antal anställda?
