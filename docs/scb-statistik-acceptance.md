@@ -215,3 +215,37 @@ These cases cover SCB's `Företagens ekonomi` (`NV0109`), not the separate enter
 **Question:** Kan jag tolka förändringen i antal företag och förädlingsvärde mellan 2021 och 2022 som en direkt jämförbar utveckling, och använder Företagens ekonomi samma definition av nya och nedlagda företag som Företagens demografi?
 
 **Reference:** Flag the 2022 change to FE, VE and LVE and check whether the exact measure has a documented comparable or linked series. State that 2022 onward enterprise units may differ from the earlier legal-unit presentation; do not assume a direct like-for-like comparison. Explain that FEK measures annual economic structure and accounting results, while enterprise births/deaths and active-firm demography belong to the separate NV1001 product with statistical responsibility assigned to Tillväxtanalys. Do not interpret aggregate FEK change as a causal policy effect.
+
+## KPI questions
+
+These cases cover Konsumentprisindex (`PR0101`) and closely related inflation measures. The measures are not interchangeable.
+
+### KPI1 — Monthly change, inflation and related measures
+
+**Question:** Hur förändrades KPI från augusti till september 2026, hur stor var inflationstakten, och hur skiljde sig KPIF?
+
+**Reference:** SCB's published September 2026 release reports KPI (2020=100) 125.94, monthly change 0.9 percent and annual change 1.1 percent; KPIF (2020=100) 124.50, monthly change 0.9 percent and annual change 1.5 percent. KPIF-XE's annual change was 0.5 percent. Explain that monthly change compares to August, annual change compares to September 2025, and KPIF holds mortgage interest rates constant while KPI captures their changes. SCB's PxWeb notes say the KPI monthly and 12-month changes are calculated using the shadow index; the finalized index level is a separate value. Identify the figures as published release values and recheck current metadata if answering from PxWeb; do not treat index levels as rates.
+
+### KPI2 — Contract indexation
+
+**Question:** Hur räknar jag upp ett belopp enligt KPI mellan september 2025 och september 2026?
+
+**Reference:** Use SCB's finalized total KPI index for the two specified months on a consistent base/series, not KPIF or the annual inflation-rate column. The finalized table reports 124.51 for September 2025 and 125.94 for September 2026 on the 2020=100 scale; the ratio implies an increase of about 1.15 percent before any contract-specific rounding. State the formula and confirm that a real contract's reference month, index version and rounding rule govern. Do not substitute a rounded annual percentage if the contract specifies an index ratio.
+
+### KPI5 — Shadow index versus finalized index
+
+**Question:** Varför blir den publicerade månadsförändringen inte alltid exakt samma som förändringen jag räknar fram från två fastställda KPI-tal?
+
+**Reference:** Explain that SCB's reported monthly and 12-month changes are calculated from the shadow index, while the finalized total index values are formally fixed and used for legal or contractual KPI indexation. Shadow-index values are adjusted for certain shortcomings in the underlying price data or methods and can differ from finalized values in some months. Differences can also reflect that published index levels and rates have different decimal precision. Do not present the shadow index as KPIF or as a replacement for the finalized values in contractual indexation.
+
+### KPI3 — Classification break and historical series
+
+**Question:** Kan jag använda KPI-grupperna före och efter januari 2026 som en obruten COICOP-serie och jämföra årsförändringarna rakt av?
+
+**Reference:** Explain that KPI moved from COICOP 1999 to COICOP 2018 in January 2026 and the base year changed to 2020=100. Earlier values in current COICOP 2018 tables are backcast, some partly model-estimated; they are not identical in all cases to the historical series originally published, and rounding can alter some annual rates by 0.1 percentage point. For a historically official rate use the series published at the time; for consistent current categories flag the backcast. Check category-level correspondence rather than assuming one-to-one continuity. Record live table and codes; this case does not freeze product-group values.
+
+### KPI4 — KPI versus national-accounts consumption deflator
+
+**Question:** Kan jag använda KPI direkt för att räkna om hushållskonsumtionen i nationalräkenskaperna till fasta priser?
+
+**Reference:** Use the appropriate national-accounts deflator or official fixed-price series for national-accounts household-consumption volume analysis. Explain that KPI and the HUKO deflator have different purposes and can differ in weights and coverage/treatment, notably housing costs. KPI may be used for consumer-price or purchasing-power questions, but do not label a KPI-adjusted value as the official national-accounts volume series.

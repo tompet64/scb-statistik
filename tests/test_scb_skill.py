@@ -194,6 +194,18 @@ def test_enterprise_economy_acceptance_cases_are_registered():
     assert "NV1001" in acceptance
 
 
+def test_kpi_acceptance_cases_are_registered():
+    acceptance = (SKILL / "docs" / "scb-statistik-acceptance.md").read_text(encoding="utf-8")
+    assert "### KPI1 — Monthly change, inflation and related measures" in acceptance
+    assert "### KPI2 — Contract indexation" in acceptance
+    assert "### KPI3 — Classification break and historical series" in acceptance
+    assert "### KPI4 — KPI versus national-accounts consumption deflator" in acceptance
+    assert "### KPI5 — Shadow index versus finalized index" in acceptance
+    assert "PR0101" in acceptance
+    assert "125.94" in acceptance
+    assert "shadow index" in acceptance
+
+
 @pytest.mark.parametrize("text", [
     "name: example\ndescription: text",  # No delimiters.
     "---\nname: [\ndescription: text\n---\n",  # Invalid YAML.

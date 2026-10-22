@@ -1,6 +1,6 @@
 ---
 name: scb-statistik
-description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), housing and dwelling conditions (boende och bostadsförhållanden, boendeform, housing space, overcrowding, housing stock and housing costs), education and study participation, regional accounts (regionalräkenskaper, BRP, regional household disposable income, wages, employment and investment), Företagens ekonomi (company structure, turnover, value added, productivity, profitability and investment), labor-market statistics including AKU (Arbetskraftsundersökningarna), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
+description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), housing and dwelling conditions (boende och bostadsförhållanden, boendeform, housing space, overcrowding, housing stock and housing costs), Konsumentprisindex (KPI), consumer price index, inflation, KPIF, HIKP, price indexation and price basis, education and study participation, regional accounts (regionalräkenskaper, BRP, regional household disposable income, wages, employment and investment), Företagens ekonomi (company structure, turnover, value added, productivity, profitability and investment), labor-market statistics including AKU (Arbetskraftsundersökningarna), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
 ---
 
 # SCB-statistik
@@ -51,6 +51,10 @@ For regional economic output, income, wages, employment or investment, use `refe
 
 For annual structural and financial statistics about non-financial enterprises and their activities, use `references/enterprise-economy-workflow.md`. Choose whether the question concerns the enterprise unit, activity unit or local activity unit. From reference year 2022 these are distinct statistical units; match the unit and geography, check SNI and revision notes, and distinguish current-price totals from fixed-price series. Do not treat firm-level accounting aggregates as causal policy effects or as firm-demography counts.
 
+## Konsumentprisindex starter method
+
+For consumer price change, inflation or indexation questions, use `references/cpi-workflow.md`. Distinguish index levels from monthly and annual percentage changes; choose KPI, KPIF, KPIF-XE or HIKP for the stated purpose. For periods before 2026, check the series and classification actually published at that time; 2026 introduces base year 2020 and COICOP 2018, with some backcast earlier subseries. Use finalized index values for contract indexation, and do not treat KPI as the automatic deflator for national-accounts consumption.
+
 ## Boende och bostadsförhållanden starter method
 
 For housing questions, first identify whether the user means households' actual housing arrangements and housing space (HE0111), the dwelling stock and its structural attributes (BO0104), housing expenditure and its relation to income (HE0202), or a specific overcrowding measure. Use `references/housing-workflow.md` to distinguish units, coverage, geography, survey/register sources and limitations. Treat remembered table IDs as discovery clues and resolve current metadata. Do not equate dwelling-stock tenure categories with the way residents occupy a dwelling, or treat housing costs as covering all households.
@@ -98,6 +102,7 @@ Whenever adding support for a statistical product or subject, update `SKILL.md` 
 - `references/education-workflow.md` — highest attained education (UREG), study participation (RPU), SUN classifications and education-series comparability.
 - `references/regional-accounts-workflow.md` — regional accounts (BRP, household disposable income, wages, employment and investment), geography, prices and comparability.
 - `references/enterprise-economy-workflow.md` — company and activity units, turnover, value added, productivity, investments and comparability in Företagens ekonomi.
+- `references/cpi-workflow.md` — KPI, related inflation measures, indexation, 2026 base-year/classification changes and price-basis choices.
 - `references/housing-workflow.md` — household housing, housing stock, housing expenditure, housing space and overcrowding measures, coverage and comparability.
 - `references/migration-workflow.md` — domestic/international migration, in-/outflow and net-migration semantics, table selection and comparability.
 - `references/pxstatspy-assessment.md` — when the optional Python library is useful.
