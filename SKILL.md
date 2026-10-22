@@ -1,6 +1,6 @@
 ---
 name: scb-statistik
-description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
+description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), education and study participation, BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
 ---
 
 # SCB-statistik
@@ -39,6 +39,10 @@ For household questions, distinguish households from residents, families, househ
 
 For income questions, resolve whether the user means household disposable income, a person's disposable income, or economic standard per consumption unit. Use `references/income-workflow.md` to choose a current SCB table and account for price basis, household population, income definitions and series breaks. Do not treat the preliminary monthly individual-income series as household income.
 
+## Education starter method
+
+Distinguish the population's highest attained education in the Education Register (UREG, `UF0506`) from participation in studies during a term in the Register on Participation in Education (RPU, `UF0507`). They measure different things and use table-specific age groups and reference dates. Use `references/education-workflow.md` for table discovery, SUN classifications, cohort/denominator choices, study-form interpretation and comparability breaks. Do not equate students or study participation with course registrations, completed qualifications, or education-program effects.
+
 ## BAS starter method
 
 For questions about the registered population's employment, unemployment or other labor-market status, use `references/bas-workflow.md`. Distinguish BAS from AKU's ILO unemployment measure and from Arbetsförmedlingen's registered-unemployed statistics; match age, geography and preliminary/final status before comparing periods.
@@ -74,6 +78,7 @@ Whenever adding support for a statistical product or subject, update `SKILL.md` 
 - `references/commuting-workflow.md` — candidate identification, origin/destination interpretation, query sizing and comparability checks for commuting statistics.
 - `references/household-workflow.md` — household-unit interpretation, table candidates, coverage, geography, and disclosure protection.
 - `references/income-workflow.md` — household disposable income, economic standard, price basis, population and income-series comparability.
+- `references/education-workflow.md` — highest attained education (UREG), study participation (RPU), SUN classifications and education-series comparability.
 - `references/migration-workflow.md` — domestic/international migration, in-/outflow and net-migration semantics, table selection and comparability.
 - `references/pxstatspy-assessment.md` — when the optional Python library is useful.
 - `references/OpenAPI-source.md` — provenance and version details for the included contract.
