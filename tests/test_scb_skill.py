@@ -54,6 +54,7 @@ def frontmatter(text):
         assert isinstance(metadata.get(field), str) and metadata[field].strip(), (
             "Missing or invalid {}".format(field)
         )
+    assert len(metadata["description"]) <= 1024, "Description exceeds installation limit"
     assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", metadata["name"])
     assert len(metadata["name"]) < 64
     return metadata
@@ -215,6 +216,7 @@ def test_kpi_acceptance_cases_are_registered():
     "---\nname: example\ndescription: ' '\n---\n",  # Empty description.
     "---\nname: Bad_Name\ndescription: text\n---\n",
     "---\nname: example\nname: other\ndescription: text\n---\n",
+    "---\nname: example\ndescription: " + "x" * 1025 + "\n---\n",
 ])
 def test_rejects_invalid_frontmatter(text):
     with pytest.raises((AssertionError, ValueError, yaml.YAMLError)):

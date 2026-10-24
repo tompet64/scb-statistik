@@ -1,6 +1,6 @@
 ---
 name: scb-statistik
-description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), housing and dwelling conditions (boende och bostadsförhållanden, boendeform, housing space, overcrowding, housing stock and housing costs), Konsumentprisindex (KPI), consumer price index, inflation, KPIF, HIKP, price indexation and price basis, education and study participation, regional accounts (regionalräkenskaper, BRP, regional household disposable income, wages, employment and investment), Företagens ekonomi (company structure, turnover, value added, productivity, profitability and investment), labor-market statistics including AKU (Arbetskraftsundersökningarna), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
+description: Find, interpret, validate and retrieve SCB statistics using PxWebApi v2 and geodata. Use for Swedish questions about population; household statistics; household income and economic standard; boende och bostadsförhållanden (housing); Konsumentprisindex (KPI), KPIF, HIKP, inflation and indexation; education and study participation; regionalräkenskaper (BRP); nationalräkenskaper, household consumption expenditure, COICOP and consumption volumes; Företagens ekonomi; AKU and BAS labor-market statistics; commuting; migration; geography; SCB tables, metadata, category values and data extracts.
 ---
 
 # SCB-statistik
@@ -46,6 +46,10 @@ Distinguish the population's highest attained education in the Education Registe
 ## Regionalräkenskaper starter method
 
 For regional economic output, income, wages, employment or investment, use `references/regional-accounts-workflow.md`. Choose the measure and geography first: BRP measures production in the region, while regional household disposable income is a resident household-sector income measure. Do not treat BRP per resident as residents' income or household disposable income per resident as an income-distribution measure. Resolve current table names, IDs and notes from live metadata.
+
+## Nationalräkenskaper starter method
+
+For national household consumption expenditure, purpose shares or consumption volume, use `references/national-accounts-workflow.md`. This first NR0103 scope covers annual and quarterly consumption by COICOP, not a complete GDP or sector-accounts workflow. Distinguish purpose-distributed expenditure from household total S14 and combined S14+HIO consumption; account for unallocated cross-border adjustments. Use current prices for expenditure shares and published volume measures for growth. Do not sum chain-linked components or infer low-income households' affordability from national aggregates. Verify classification, reference year, adjustment and revisions for each table.
 
 ## Företagens ekonomi starter method
 
@@ -101,6 +105,7 @@ Whenever adding support for a statistical product or subject, update `SKILL.md` 
 - `references/income-workflow.md` — household disposable income, economic standard, price basis, population and income-series comparability.
 - `references/education-workflow.md` — highest attained education (UREG), study participation (RPU), SUN classifications and education-series comparability.
 - `references/regional-accounts-workflow.md` — regional accounts (BRP, household disposable income, wages, employment and investment), geography, prices and comparability.
+- `references/national-accounts-workflow.md` — national household consumption expenditure, COICOP purposes, sector/denominator boundaries, current prices, chain-linked volumes and revisions.
 - `references/enterprise-economy-workflow.md` — company and activity units, turnover, value added, productivity, investments and comparability in Företagens ekonomi.
 - `references/cpi-workflow.md` — KPI, related inflation measures, indexation, 2026 base-year/classification changes and price-basis choices.
 - `references/housing-workflow.md` — household housing, housing stock, housing expenditure, housing space and overcrowding measures, coverage and comparability.
