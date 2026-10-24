@@ -53,7 +53,7 @@ For annual structural and financial statistics about non-financial enterprises a
 
 ## Konsumentprisindex starter method
 
-For consumer price change, inflation or indexation questions, use `references/cpi-workflow.md`. Distinguish index levels from monthly and annual percentage changes; choose KPI, KPIF, KPIF-XE or HIKP for the stated purpose. For periods before 2026, check the series and classification actually published at that time; 2026 introduces base year 2020 and COICOP 2018, with some backcast earlier subseries. Use finalized index values for contract indexation, and do not treat KPI as the automatic deflator for national-accounts consumption.
+For consumer price change, inflation or indexation questions, use `references/cpi-workflow.md`. Distinguish index levels from monthly and annual percentage changes; choose KPI, KPIF, KPIF-XE or HIKP for the stated purpose. For periods before 2026, check the series and classification actually published at that time; 2026 introduces base year 2020 and COICOP 2018, with some backcast earlier subseries. Use finalized index values for contract indexation; across the 2026 base-year change, use SCB's rebased finalized series to put both months on the same base and identify which values are rebased. Check the actual shadow and finalized levels before attributing a difference to shadow-index adjustments rather than rounding. Do not treat KPI as the automatic deflator for national-accounts consumption.
 
 ## Boende och bostadsförhållanden starter method
 
