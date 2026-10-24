@@ -4,6 +4,8 @@ Use these cases alongside the existing offline document checks, not as a replace
 
 ## Run and assess
 
+National-accounts cases NR1–NR5 were added on 2026-10-24. Numeric references below come from live API extracts, not independent model-answer tests; all three source tables were updated on 2026-08-28. Recheck revisions before scoring.
+
 Run the question in a fresh conversation with the skill under review and access to SCB. Give the answering assistant the question and the skill, not the reference answer. Record the skill commit, model, date, API selections, source responses and final answer. Assess the answer only after execution against the reference below and current metadata. Repeat important cases with different wording before claiming stable behavior.
 
 Require the correct statistical unit/population, measure, geography/direction, reference period, units and interpretation. A correct number with a materially wrong meaning fails. Mark blocked source access as unverified, not passed. Separate structural checks, live API behavior and model-answer quality in the result.
@@ -251,3 +253,35 @@ These cases cover Konsumentprisindex (`PR0101`) and closely related inflation me
 **Question:** Kan jag använda KPI direkt för att räkna om hushållskonsumtionen i nationalräkenskaperna till fasta priser?
 
 **Reference:** Use the appropriate national-accounts deflator or official fixed-price series for national-accounts household-consumption volume analysis. Explain that KPI and the HUKO deflator have different purposes and can differ in weights and coverage/treatment, notably housing costs. KPI may be used for consumer-price or purchasing-power questions, but do not label a KPI-adjusted value as the official national-accounts volume series.
+
+## Nationalräkenskaper: household consumption
+
+### NR1 — Annual transport expenditure and denominator
+
+**Question:** Hur stora var hushållens konsumtionsutgifter för transporter 2024, och vilken andel av konsumtionen utgjorde de? Förklara vilken total du använder.
+
+**Reference (live API, 2026-10-24):** `TAB6332`, `Tid=2024`, `ContentsCode=000007EJ`, unit mnkr: `AndamalCOICOP=CP07` 359 221; `S14` 2 838 122; `S15` 79 876; `S14S15` 2 917 998; `CP15` 123 819; `CP16` −117 189. The 13 top-level purpose groups `CP01`–`CP13` sum to 2 831 492. Verify that this equals `S14 - CP15 - CP16`; CP16 is already negative. A purpose-composition share is 12.686633... percent, approximately 12.7 percent. Relative to S14 the ratio is 12.656996... percent, also 12.7 percent to one decimal. Rounding therefore hides the denominator difference: correct rounding alone does not pass. Identify that CP07 is purpose-distributed transport expenditure, while S14 includes unallocated cross-border adjustments. Do not claim an exact resident-household transport budget share or silently use the combined S14S15 total. State that NR aggregates are not amounts per household.
+
+### NR2 — Nominal spending versus consumption volume
+
+**Question:** Transportutgifterna steg mellan 2023 och 2024. Hur mycket ökade konsumtionen när prisförändringar räknas bort?
+
+**Reference (live API, 2026-10-24):** `TAB6332`, `AndamalCOICOP=CP07`, `Tid=2023,2024`: current-price measure `000007EJ` is 352 874 and 359 221 mnkr; fixed-price measure `000007EI` (reference year 2020) is 291 960 and 297 590 mnkr; published volume change `000007EL` for 2024 is 1.9 percent. Use the published volume change or verify it against the fixed-price levels at published precision. Do not label nominal growth as volume growth, deflate with overall KPI as if it were SCB's official volume series, or interpret volume as journeys or kilometres.
+
+### NR3 — Quarterly comparison interval and metadata conflict
+
+**Question:** Hur utvecklades transportkonsumtionen andra kvartalet 2026 jämfört med föregående kvartal respektive samma kvartal 2025?
+
+**Reference (live API, 2026-10-24):** For quarter-on-quarter development use `TAB6331`, `Andamal=CP07`, `Tid=2026K2`, `ContentsCode=0000079M`: 0.8 percent, seasonally adjusted (`SesOnly`). Its fixed-price 2025-reference levels (`0000079L`) are 95 384 mnkr in 2026K1 and 96 128 mnkr in 2026K2. For actual year-on-year development use `TAB6330`, `Andamal=CP07`, `Tid=2026K2`, `ContentsCode=0000079K`: 4.5 percent; fixed-price levels (`0000079H`) are 100 198 mnkr in 2025K2 and 104 719 mnkr in 2026K2. Label both adjustment and comparison interval; do not call both rates annual growth or claim calendar adjustment from the parent subject-path label. If using TAB6331's current-price `0000079O`, flag that its label says mnkr but the unit field says procent; do not report the level as a percentage. Do not splice annual 2020-reference levels to quarterly 2025-reference levels.
+
+### NR4 — Product boundaries and affordability
+
+**Question:** Kan transporternas andel i nationalräkenskaperna visa hur stor del av låginkomsthushållens budget som går till nödvändiga resor? Är transportgruppen samma sak som kollektivtrafik?
+
+**Reference:** Explain that the checked NR tables contain national aggregates without income-decile, household-type or regional breakdowns. They cannot establish affordability or unmet travel needs for low-income households. Refer to appropriate household-budget/income sources and verify year and population coverage; do not fabricate a contemporary HUT result. CP07 includes vehicle purchases, operating costs, passenger transport services and transport services for goods; it is broader than public transport. Distinguish expenditure from actual individual consumption and from the separate short-term consumption indicator. This is an interpretation case, with no numeric distributional answer validated.
+
+### NR5 — Classification, chain linking and revisions
+
+**Question:** Kan jag lägga ihop alla COICOP-rader i fasta priser till en total och förlänga serien med äldre COICOP 1999-tabeller? Skedde bytet 2026 som för KPI?
+
+**Reference:** Reject summing overlapping parent/child categories and explain that chain-linked fixed-price components are generally not additive; use the directly published volume aggregate. Current-price composition can use mutually exclusive top-level groups. NR introduced COICOP 2018 on 2024-05-30; KPI's January 2026 transition is a different product event. Do not splice archived NR0101/COICOP1999 or ENS95 series without a documented bridge. Check the 2026-08-28 correction: quarterly purpose/durability distributions for 2022–2024 and annual 2024 were affected, total household expenditure was not. Explain table-specific reference years, revisions, missing values and lack of published confidence intervals. Record the live vintage. This case does not independently validate a historical bridge or model response.

@@ -1,110 +1,115 @@
 ---
 name: scb-statistik
-description: Find, interpret, validate, and retrieve statistics from Statistics Sweden (SCB) using PxWebApi v2 and SCB geodata sources. Use for Swedish statistical questions about population, household statistics and household income (including disposable income and economic standard), housing and dwelling conditions (boende och bostadsförhållanden, boendeform, housing space, overcrowding, housing stock and housing costs), Konsumentprisindex (KPI), consumer price index, inflation, KPIF, HIKP, price indexation and price basis, education and study participation, regional accounts (regionalräkenskaper, BRP, regional household disposable income, wages, employment and investment), Företagens ekonomi (company structure, turnover, value added, productivity, profitability and investment), labor-market statistics including AKU (Arbetskraftsundersökningarna), BAS (Befolkningens arbetsmarknadsstatus), employment and unemployment, commuting, migration (flyttningar, immigration and emigration), geography, SCB tables, dimensions, category values, or data extracts.
+description: Hitta, tolka, validera och hämta SCB-statistik via PxWebApi v2 och geodata. Använd för frågor om befolkning; hushållsstatistik; hushållens inkomster och ekonomiska standard; boende och bostadsförhållanden; konsumentprisindex (KPI), KPIF, HIKP, inflation och indexuppräkning; utbildning och studiedeltagande; regionalräkenskaper (BRP); nationalräkenskaper, hushållens konsumtionsutgifter, COICOP och konsumtionsvolymer; Företagens ekonomi; arbetsmarknadsstatistik från AKU och BAS; pendling; migration och flyttningar; geografi; SCB-tabeller, metadata, kategorivärden och datauttag.
 ---
 
 # SCB-statistik
 
-Use this skill to turn a Swedish-language statistical question into a traceable SCB table and a valid PxWebApi v2 selection. Treat semantic interpretation as the skill's job; SCB's `query` parameter is a keyword search, not a semantic search engine.
+Använd färdigheten för att omsätta en statistikfråga på svenska till en spårbar SCB-tabell och ett giltigt urval i PxWebApi v2. Tolka frågans innebörd själv; SCB:s parameter `query` söker efter nyckelord och är inte en semantisk sökmotor.
 
-## Workflow
+## Arbetsgång
 
-1. Parse the request into measure/concept, population or statistical unit, geography, time period, frequency, breakdowns, and desired unit. Preserve the user's exact intent; for example, `folkmängd` is a stock at a point in time, while `folkökning` is a change/flow.
-2. Search SCB's table list with several short Swedish concept phrases, one at a time. Start with the measure plus a likely dimension (for example, `folkmängd region`), then try meaningful variants such as `befolkning kommun`, `invånare region`, and `antal folkbokförda`. The API `query` is a keyword filter, not a semantic search: a full natural-language sentence can return no rows. A zero-result query is not evidence that SCB lacks the statistic; simplify it and try synonyms.
-3. Route geographic requests to the right source. For standard administrative areas and table-shaped statistics, search PxWebApi v2. If the request mentions grid/raster cells, fine spatial resolution, downloadable GIS data, or an area not represented in table metadata, also check SCB's open geodata and geographic-indelning pages. Geodata may be outside PxWebApi; a zero-result table search does not establish that the statistic is unavailable. See `references/geodata-workflow.md` for retrieval and handling. If an appropriate product is paid, commissioned, access-restricted, or otherwise unavailable for open API retrieval, do not seek a workaround or imply it is available; explain the limitation and refer the user to the official provider or ordering page.
-4. Screen the compact table-list records before fetching detailed metadata. Compare table title, description, `variableNames`, period coverage, update date and subject path. Use pagination where the table-list response indicates more results. Do not choose on title similarity or update date alone.
-5. State the best candidate and why it fits. If a difference would change the measure/table (for example, year-end stock versus monthly population), ask one short clarification. Otherwise proceed with a stated assumption.
-6. Fetch detailed metadata only for the leading candidate(s). Some tables have very large category domains (for example, municipality plus DeSO/RegSO areas). Do not print or pass every category label into the conversation. Parse the metadata locally or inspect just the required codes and labels. If that is not practical, compare a more focused table with the same measure, geography and period before proceeding.
-7. Build the smallest valid selection matching the request. For an overall total, inspect the table's default selection and test whether optional dimensions can be omitted; PxAPI v2 may apply the default selection and return a single aggregate without category filters. Do not select and sum optional categories unnecessarily. Verify the response dimensions and value before relying on this behavior. If the response still contains a breakdown, use an explicit total category if available or aggregate mutually exclusive categories only after checking notes and disclosure perturbation.
-8. Check the estimated cell count, API limits, time coverage, geographic comparability and any break in series. Retrieve data only after the selection is valid.
-9. Report the table title and table ID, reference period, update date if available, selected categories and unit. Link to the SCB table/API where possible. Distinguish a data fact from a recommendation about what the user meant.
+1. Identifiera mått eller begrepp, population eller statistisk enhet, geografi, tidsperiod, frekvens, redovisningsgrupper och önskad enhet. Bevara användarens avsikt: exempelvis är `folkmängd` ett bestånd vid en tidpunkt, medan `folkökning` är en förändring eller ett flöde.
+2. Sök i SCB:s tabellförteckning med flera korta svenska begreppsfraser, en i taget. Börja med måttet och en trolig dimension, exempelvis `folkmängd region`, och pröva sedan varianter som `befolkning kommun`, `invånare region` och `antal folkbokförda`. Parametern `query` filtrerar på nyckelord; en hel fråga på naturligt språk kan ge noll träffar. Det bevisar inte att statistiken saknas: förenkla sökningen och pröva synonymer.
+3. Välj rätt källa för geografiska frågor. Sök i PxWebApi v2 efter vanliga administrativa områden och statistik i tabellform. Vid frågor om rutnät, rasterceller, hög geografisk upplösning, nedladdningsbara GIS-data eller områden som saknas i tabellmetadata, kontrollera även SCB:s öppna geodata och sidor om geografiska indelningar. Geodata kan ligga utanför PxWebApi; en tabellsökning utan träff visar inte att uppgifterna saknas. Följ `references/geodata-workflow.md`. Om lämpliga uppgifter kräver betalning, beställning eller särskild behörighet, eller annars inte kan hämtas öppet via API, förklara begränsningen och hänvisa till officiell leverantör eller beställningssida. Försök inte kringgå begränsningen eller antyda att uppgifterna är öppet tillgängliga.
+4. Granska tabellförteckningens kompakta poster innan detaljerade metadata hämtas. Jämför titel, beskrivning, `variableNames`, tidsomfattning, uppdateringsdatum och ämneshierarki. Hämta fler resultatsidor när svaret anger att sådana finns. Välj inte tabell enbart utifrån liknande titel eller senaste uppdatering.
+5. Ange den bästa tabellkandidaten och varför den passar. Ställ en kort följdfråga om en oklarhet skulle ändra måttet eller tabellvalet, exempelvis årsslutsbefolkning jämfört med månadsbefolkning. Fortsätt annars med ett uttryckligt antagande.
+6. Hämta detaljerade metadata bara för de främsta kandidaterna. Vissa tabeller har mycket stora värdemängder, exempelvis kommuner tillsammans med DeSO- och RegSO-områden. Skriv inte ut alla kategorinamn i samtalet. Bearbeta metadata lokalt eller granska endast relevanta koder och benämningar. Om det inte är praktiskt möjligt, pröva en mer avgränsad tabell med samma mått, geografi och tidsperiod.
+7. Bygg det minsta giltiga urval som besvarar frågan. För en total, granska tabellens standardurval och pröva om valfria dimensioner kan utelämnas. PxAPI v2 kan då ge ett enda aggregat utan kategorifilter. Välj och summera inte valfria kategorier i onödan. Kontrollera svarets dimensioner och värde innan beteendet används. Om svaret fortfarande innehåller en uppdelning, välj en uttrycklig totalkategori om sådan finns. Summera annars endast ömsesidigt uteslutande kategorier och först efter kontroll av noter och röjandeskyddets påverkan.
+8. Kontrollera uppskattat cellantal, API-gränser, tidsomfattning, geografisk jämförbarhet och eventuella tidsseriebrott. Hämta data först när urvalet är giltigt.
+9. Redovisa tabelltitel och tabell-id, referensperiod, tillgängligt uppdateringsdatum, valda kategorier och enhet. Länka till SCB-tabellen eller API-uttaget när det går. Skilj statistikuppgifter från din tolkning av användarens avsikt.
 
-## Population starter method
+## Grundmetod: Befolkning
 
-For a request about residents/inhabitants or `befolkning`, first determine whether the intended statistic is:
+Avgör först om en fråga om befolkning eller invånare avser:
 
-- population stock (`folkmängd`), commonly measured at year-end;
-- a current/monthly stock, if the question asks for the latest available value;
-- population change (`folkökning`), births, deaths, migration or another flow.
+- folkmängd vid en tidpunkt, vanligen vid årets slut;
+- aktuell folkmängd eller månadsbefolkning, om den senaste uppgiften efterfrågas;
+- folkökning, födda, döda, flyttningar eller andra flöden.
 
-For annual municipality/county population, search the API for current tables matching `folkmängd efter region år`, then verify the table metadata and regional dimension. The portal's familiar table `Folkmängden efter region, civilstånd, ålder och kön` is a useful search clue, not a guaranteed stable API table ID. Prefer a table with the requested time coverage and granularity, and check whether municipal boundaries or regional codes changed during the series. If the user says “latest”, compare the latest reference period and update date, and consider a monthly table; do not silently substitute monthly data for annual year-end values.
+För årlig kommun- eller länsbefolkning, sök aktuella API-tabeller med exempelvis `folkmängd efter region år` och kontrollera metadata och regiondimension. Den välkända tabellen `Folkmängden efter region, civilstånd, ålder och kön` är en sökledtråd, inte ett garanterat stabilt tabell-id. Välj rätt tidsomfattning och detaljnivå och kontrollera ändrade kommungränser och regionkoder. Om användaren frågar efter det senaste, jämför referensperiod och uppdateringsdatum och överväg en månadstabell. Ersätt inte årlig årsslutsbefolkning med månadsdata utan att ange det.
 
-Useful paraphrases for candidate discovery include `befolkning`, `invånare`, `folkmängd`, `antal folkbokförda`, plus the requested geography and years. Use these as separate keyword searches rather than expecting one query to understand the full prompt.
+Pröva separata sökningar med `befolkning`, `invånare`, `folkmängd` och `antal folkbokförda`, tillsammans med efterfrågad geografi och år. Förvänta dig inte att en enda sökning förstår hela frågan.
 
-## Household starter method
+## Grundmetod: Hushållsstatistik
 
-For household questions, distinguish households from residents, families, household members, household type, household size and dwelling/tenure. Use `references/household-workflow.md` for SCB's household-unit definition, the annual year-end tables, coverage limitations, geography breaks and disclosure notes. For household disposable income or comparisons of economic standard, use `references/income-workflow.md` and distinguish household totals from person-level equivalised income.
+Skilj hushåll från personer, familjer och hushållsmedlemmar samt från hushållstyp, hushållsstorlek och boendeform. Använd `references/household-workflow.md` för SCB:s hushållsdefinition, årliga uppgifter vid årets slut, täckning, geografiska tidsseriebrott och röjandeskydd. För disponibel inkomst och ekonomisk standard, använd `references/income-workflow.md` och skilj hushållets totalinkomst från personers ekonomiska standard per konsumtionsenhet.
 
-## Income starter method
+## Grundmetod: Hushållens inkomster
 
-For income questions, resolve whether the user means household disposable income, a person's disposable income, or economic standard per consumption unit. Use `references/income-workflow.md` to choose a current SCB table and account for price basis, household population, income definitions and series breaks. Do not treat the preliminary monthly individual-income series as household income.
+Avgör om frågan gäller hushållets disponibla inkomst, en persons disponibla inkomst eller ekonomisk standard per konsumtionsenhet. Använd `references/income-workflow.md` för aktuellt tabellval, prisnivå, hushållspopulation, inkomstdefinition och tidsseriebrott. Behandla inte preliminära månadsuppgifter om individinkomster som hushållsinkomster.
 
-## Education starter method
+## Grundmetod: Utbildning och studiedeltagande
 
-Distinguish the population's highest attained education in the Education Register (UREG, `UF0506`) from participation in studies during a term in the Register on Participation in Education (RPU, `UF0507`). They measure different things and use table-specific age groups and reference dates. Use `references/education-workflow.md` for table discovery, SUN classifications, cohort/denominator choices, study-form interpretation and comparability breaks. Do not equate students or study participation with course registrations, completed qualifications, or education-program effects.
+Skilj befolkningens högsta uppnådda utbildning enligt Utbildningsregistret (UREG, `UF0506`) från studiedeltagande under en termin enligt Registret över personer i utbildning (RPU, `UF0507`). De mäter olika saker och använder tabellspecifika åldersgrupper och referenstidpunkter. Använd `references/education-workflow.md` för tabellval, SUN-indelningar, kohorter och nämnare, studieformer och jämförbarhetsbrott. Likställ inte studenter eller studiedeltagande med kursregistreringar, avslutade examina eller utbildningseffekter.
 
-## Regionalräkenskaper starter method
+## Grundmetod: Regionalräkenskaper
 
-For regional economic output, income, wages, employment or investment, use `references/regional-accounts-workflow.md`. Choose the measure and geography first: BRP measures production in the region, while regional household disposable income is a resident household-sector income measure. Do not treat BRP per resident as residents' income or household disposable income per resident as an income-distribution measure. Resolve current table names, IDs and notes from live metadata.
+Använd `references/regional-accounts-workflow.md` för regional produktion, hushållsinkomster, löner, sysselsättning och investeringar. Välj mått och geografi först: BRP mäter produktion i regionen, medan regional disponibel hushållsinkomst avser inkomster för regionens hushållssektor. Tolka inte BRP per invånare som invånarnas inkomst eller disponibel hushållsinkomst per invånare som ett fördelningsmått. Kontrollera aktuella tabellnamn, id:n och noter i API-metadata.
 
-## Företagens ekonomi starter method
+## Grundmetod: Nationalräkenskaper
 
-For annual structural and financial statistics about non-financial enterprises and their activities, use `references/enterprise-economy-workflow.md`. Choose whether the question concerns the enterprise unit, activity unit or local activity unit. From reference year 2022 these are distinct statistical units; match the unit and geography, check SNI and revision notes, and distinguish current-price totals from fixed-price series. Do not treat firm-level accounting aggregates as causal policy effects or as firm-demography counts.
+Använd `references/national-accounts-workflow.md` för hushållens konsumtionsutgifter på nationell nivå, utgiftsandelar och konsumtionsvolym. Det första stödet för NR0103 omfattar års- och kvartalskonsumtion efter COICOP, inte en fullständig metod för BNP eller sektorräkenskaper. Skilj ändamålsfördelade utgifter från hushållens total S14 och hushåll inklusive HIO, S14+S15. Beakta ofördelade utlandsposter. Använd löpande priser för utgiftsandelar och publicerade volymmått för tillväxt. Summera inte kedjade volymkomponenter och dra inte slutsatser om låginkomsthushållens ekonomiska överkomlighet från nationella aggregat. Kontrollera klassifikation, referensår, justeringar och revideringar för varje tabell.
 
-## Konsumentprisindex starter method
+## Grundmetod: Företagens ekonomi
 
-For consumer price change, inflation or indexation questions, use `references/cpi-workflow.md`. Distinguish index levels from monthly and annual percentage changes; choose KPI, KPIF, KPIF-XE or HIKP for the stated purpose. For periods before 2026, check the series and classification actually published at that time; 2026 introduces base year 2020 and COICOP 2018, with some backcast earlier subseries. Use finalized index values for contract indexation; across the 2026 base-year change, use SCB's rebased finalized series to put both months on the same base and identify which values are rebased. Check the actual shadow and finalized levels before attributing a difference to shadow-index adjustments rather than rounding. Do not treat KPI as the automatic deflator for national-accounts consumption.
+Använd `references/enterprise-economy-workflow.md` för årliga struktur- och ekonomiska uppgifter om icke-finansiella företag och deras verksamhet. Avgör om frågan gäller företagsenhet, verksamhetsenhet eller lokal verksamhetsenhet. Från referensår 2022 är dessa skilda statistiska enheter. Matcha enhet och geografi, kontrollera SNI och revideringsnoter och skilj totaler i löpande priser från serier i fasta priser. Tolka inte företagens samlade räkenskapsuppgifter som kausala politikeffekter eller som företagsdemografiska antal.
 
-## Boende och bostadsförhållanden starter method
+## Grundmetod: Konsumentprisindex
 
-For housing questions, first identify whether the user means households' actual housing arrangements and housing space (HE0111), the dwelling stock and its structural attributes (BO0104), housing expenditure and its relation to income (HE0202), or a specific overcrowding measure. Use `references/housing-workflow.md` to distinguish units, coverage, geography, survey/register sources and limitations. Treat remembered table IDs as discovery clues and resolve current metadata. Do not equate dwelling-stock tenure categories with the way residents occupy a dwelling, or treat housing costs as covering all households.
+Använd `references/cpi-workflow.md` för konsumentpriser, inflation och indexuppräkning. Skilj indexnivåer från månads- och årsförändringar i procent. Välj KPI, KPIF, KPIF-XE eller HIKP efter syftet. För perioder före 2026, kontrollera den serie och klassifikation som faktiskt publicerades då. År 2026 införs basår 2020 och COICOP 2018, med vissa tillbakaräknade historiska delserier. Använd fastställda indextal för avtalsreglerad indexuppräkning. Över basårsbytet 2026, använd SCB:s ombasade fastställda serier så att månaderna har samma bas, och ange vilka värden som är ombasade. Jämför de faktiska skuggindextalen och fastställda nivåerna innan en avvikelse tillskrivs skuggindexjusteringar i stället för avrundning. Använd inte KPI som automatisk deflator för konsumtionen i nationalräkenskaperna.
 
-## BAS starter method
+## Grundmetod: Boende och bostadsförhållanden
 
-For questions about the registered population's employment, unemployment or other labor-market status, use `references/bas-workflow.md`. Distinguish BAS from AKU's ILO unemployment measure and from Arbetsförmedlingen's registered-unemployed statistics; match age, geography and preliminary/final status before comparing periods.
+Avgör först om frågan gäller hushållens faktiska boende och bostadsyta (HE0111), bostadsbeståndets struktur (BO0104), boendeutgifter och deras förhållande till inkomster (HE0202) eller ett särskilt trångboddhetsmått. Använd `references/housing-workflow.md` för enheter, täckning, geografi, urvals- eller registerkällor och begränsningar. Behandla ihågkomna tabell-id:n som sökledtrådar och kontrollera aktuella metadata. Likställ inte beståndets upplåtelseformer med invånarnas faktiska boendeform och anta inte att boendeutgifterna omfattar alla hushåll.
 
-## AKU starter method
+## Grundmetod: BAS
 
-For labor-market indicators from the Labor Force Surveys (AKU), use `references/aku-workflow.md`. Treat AKU as a sample survey applying ILO labor-force concepts, not as an administrative count. Match the requested age group, period, raw or seasonally adjusted series, statistical measure and geography; account for estimation uncertainty, the 2021 series break and current table-specific quality notes.
+Använd `references/bas-workflow.md` för den folkbokförda befolkningens sysselsättning, arbetslöshet och övriga arbetsmarknadsstatus. Skilj BAS från AKU:s arbetslöshetsmått enligt ILO och från Arbetsförmedlingens statistik över inskrivna arbetslösa. Matcha ålder, geografi och preliminär eller slutlig status innan perioder jämförs.
 
-## Commuting starter method
+## Grundmetod: AKU
 
-For commuting questions, distinguish the count of employed people classified by residence and workplace municipality from actual journeys, trip frequency, distance, route, or mode. Use `references/commuting-workflow.md` to resolve direction, choose the current annual register table, account for method notes and avoid oversized origin-destination extracts. Treat table IDs such as `TAB1830` as discovery clues only; resolve current metadata on each task.
+Använd `references/aku-workflow.md` för Arbetskraftsundersökningarna (AKU). Behandla AKU som en urvalsundersökning med ILO:s arbetskraftsbegrepp, inte som en administrativ totalräkning. Matcha åldersgrupp, period, ojusterad eller säsongrensad serie, statistiskt mått och geografi. Beakta skattningsosäkerhet, tidsseriebrottet 2021 och aktuella tabellspecifika kvalitetsnoter.
 
-## Migration starter method
+## Grundmetod: Pendling
 
-For migration questions, distinguish registered population movements from travel or temporary mobility. Resolve whether the user means all in-/out-movements, domestic moves, immigration/emigration, or net migration. Use `references/migration-workflow.md` for table discovery, component meanings, time-series splits and disclosure notes. Resolve current table IDs and value codes from live metadata; do not assume codes match between adjacent tables.
+Skilj antalet sysselsatta personer klassificerade efter bostads- och arbetsställekommun från faktiska resor, resfrekvens, avstånd, färdväg och färdsätt. Använd `references/commuting-workflow.md` för riktning, aktuellt årsregister, metodnoter och begränsning av stora uttag mellan start- och målområden. Behandla tabell-id:n som `TAB1830` som sökledtrådar och kontrollera aktuella metadata vid varje uppgift.
 
-## API and client rules
+## Grundmetod: Migration
 
-- Read `references/PxAPI-2.yml` for the pinned API contract. It is an official OpenAPI snapshot; the live API and current table metadata take precedence when they differ.
-- The usual SCB v2 base URL is `https://statistikdatabasen.scb.se/api/v2`. Confirm current paths and parameter names in the spec. In particular, the GET data filter is `valuecodes` (lowercase) as documented in this snapshot; POST accepts a JSON selection body.
-- If no values are specified, the data endpoint applies the table's default selection. Inspect `/tables/{id}/defaultselection` when unclear; omission may yield an aggregate for optional variables. Verify the response shape rather than assuming omission means either “all categories” or “total.”
-- Use `/tables` for table discovery, `/tables/{id}` for compact table metadata, `/tables/{id}/metadata` for dimensions/category values and notes, and `/tables/{id}/data` for observations. Pass language explicitly when useful. Handle pagination and response errors; don't assume the first page contains all candidates.
-- `pxstatspy` is an optional third-party client adapter, not an SCB product and not a semantic search engine. Inspect whether it is installed and which version/API it exposes. Use it only for operations it supports cleanly, and validate the request/response against the OpenAPI contract. Do not add it as a mandatory dependency or install it automatically. If absent or mismatched, call the documented REST API directly using an available HTTP client.
-- Do not rely on a remembered table ID or a code copied from an old portal. Resolve it from current API metadata on each task.
-- Respect API limits stated in current SCB documentation/configuration. Minimize requests, avoid fetching all categories unless required, and split large selections only when necessary.
-- Do not imply that all SCB data are delivered through PxWebApi. For raster/geodata requests, use SCB geodata services or downloadable files and follow `references/geodata-workflow.md`. Explain when finer resolution or a custom geography requires commissioned data. Do not silently aggregate, spatially join or sum grid cells without checking the measure, boundary/version and disclosure protection.
+Skilj folkbokförda flyttningar från resor och tillfällig rörlighet. Avgör om frågan gäller samtliga in- eller utflyttningar, inrikes flyttningar, invandring, utvandring eller flyttnetto. Använd `references/migration-workflow.md` för tabellval, komponenternas innebörd, uppdelade tidsserier och röjandeskydd. Hämta aktuella tabell-id:n och värdekoder från metadata. Anta inte att koder är identiska mellan närliggande tabeller.
 
-## Maintain statistical product coverage
+## Regler för API och klienter
 
-Whenever adding support for a statistical product or subject, update `SKILL.md` in the same change, even when extending an existing guide. Keep the description's discovery terms, the relevant starter method or routing instruction, and the reference list aligned with the supported scope; link any new guide directly here. Do not treat a standalone reference file as a completed product addition. Verify current metadata and record the statistical unit, population, geography, reference period, units, comparability and disclosure limitations in the guide. Add or update a realistic statistical acceptance case, run the existing offline structural validation, and report statistical checks separately from structural checks. Keep new live API checks separate from the offline validator.
+- Läs `references/PxAPI-2.yml` för det inkluderade API-kontraktet. Det är en ögonblicksbild av den officiella OpenAPI-specifikationen. Det aktuella API:et och tabellernas metadata har företräde vid avvikelser.
+- Vanlig basadress för SCB:s v2-API är `https://statistikdatabasen.scb.se/api/v2`. Kontrollera sökvägar och parameternamn i specifikationen. GET-filtreringen använder `valuecodes` med gemener enligt denna version. POST tar emot ett JSON-objekt med urvalet.
+- Om inga värden anges tillämpar dataändpunkten tabellens standardurval. Kontrollera `/tables/{id}/defaultselection` vid oklarheter. Utelämnade valfria variabler kan ge ett aggregat. Kontrollera svarets struktur; anta inte att utelämnat filter betyder vare sig alla kategorier eller totalen.
+- Använd `/tables` för tabellsökning, `/tables/{id}` för kompakta tabellmetadata, `/tables/{id}/metadata` för dimensioner, kategorivärden och noter samt `/tables/{id}/data` för observationer. Ange språk uttryckligen när det behövs. Hantera resultatsidor och svarsfel. Anta inte att första sidan innehåller alla kandidater.
+- `pxstatspy` är en valfri tredjepartsklient, inte en SCB-produkt eller en semantisk sökmotor. Kontrollera om biblioteket är installerat och vilken version och vilka API-funktioner det erbjuder. Använd det endast för funktioner det stöder väl och validera anrop och svar mot API-kontraktet. Gör det inte till ett obligatoriskt beroende och installera det inte automatiskt. Om biblioteket saknas eller inte passar, anropa det dokumenterade REST-API:et direkt med en tillgänglig HTTP-klient.
+- Lita inte på ihågkomna tabell-id:n eller koder från äldre gränssnitt. Kontrollera dem mot aktuella API-metadata vid varje uppgift.
+- Följ API-gränserna i SCB:s aktuella dokumentation och konfiguration. Minimera antalet anrop, hämta inte alla kategorier om det inte behövs och dela upp stora urval endast vid behov.
+- Antyd inte att all SCB-statistik finns i PxWebApi. För raster och geodata, använd SCB:s geodatatjänster eller nedladdningsbara filer enligt `references/geodata-workflow.md`. Förklara när högre upplösning eller egen geografi kräver beställda uppgifter. Aggregera, sammanfoga geografiskt eller summera inte rutdata utan att kontrollera mått, gränser, version och röjandeskydd.
 
-## References
+## Underhåll av produktstödet
 
-- `references/semantic-workflow.md` — candidate comparison and worked population example.
-- `references/geodata-workflow.md` — when to search SCB geodata, supported access patterns, and ZIP/GeoPackage handling.
-- `references/bas-workflow.md` — BAS status categories, table selection, age/geography alignment, revision handling and distinction from AKU.
-- `references/aku-workflow.md` — AKU labor-force concepts, sample estimates, time-series handling, geography and quality limitations.
-- `references/commuting-workflow.md` — candidate identification, origin/destination interpretation, query sizing and comparability checks for commuting statistics.
-- `references/household-workflow.md` — household-unit interpretation, table candidates, coverage, geography, and disclosure protection.
-- `references/income-workflow.md` — household disposable income, economic standard, price basis, population and income-series comparability.
-- `references/education-workflow.md` — highest attained education (UREG), study participation (RPU), SUN classifications and education-series comparability.
-- `references/regional-accounts-workflow.md` — regional accounts (BRP, household disposable income, wages, employment and investment), geography, prices and comparability.
-- `references/enterprise-economy-workflow.md` — company and activity units, turnover, value added, productivity, investments and comparability in Företagens ekonomi.
-- `references/cpi-workflow.md` — KPI, related inflation measures, indexation, 2026 base-year/classification changes and price-basis choices.
-- `references/housing-workflow.md` — household housing, housing stock, housing expenditure, housing space and overcrowding measures, coverage and comparability.
-- `references/migration-workflow.md` — domestic/international migration, in-/outflow and net-migration semantics, table selection and comparability.
-- `references/pxstatspy-assessment.md` — when the optional Python library is useful.
-- `references/OpenAPI-source.md` — provenance and version details for the included contract.
-- `references/PxAPI-2.yml` — official OpenAPI contract snapshot.
+Uppdatera `SKILL.md` i samma ändring varje gång en statistikprodukt eller ett ämnesområde läggs till, även när en befintlig guide utökas. Håll beskrivningens sökbegrepp, relevant grundmetod eller hänvisning och referenslistan förenliga med det faktiska stödet. Länka varje ny guide direkt härifrån. En fristående referensfil räcker inte som färdigt produktstöd. Kontrollera aktuella metadata och dokumentera statistisk enhet, population, geografi, referensperiod, enheter, jämförbarhet och röjandeskydd i guiden. Lägg till eller uppdatera ett realistiskt statistiskt acceptansfall. Kör den befintliga strukturella valideringen utan nätverk och redovisa statistiska kontroller separat från strukturella. Håll nya kontroller mot det aktuella API:et åtskilda från den nätverksfria valideringen.
+
+## Referenser
+
+- `references/semantic-workflow.md` — jämförelse av tabellkandidater och genomarbetat befolkningsexempel.
+- `references/geodata-workflow.md` — när geodata behövs, åtkomstvägar och hantering av ZIP och GeoPackage.
+- `references/bas-workflow.md` — arbetsmarknadsstatus, tabellval, ålder, geografi, revideringar och skillnader mot AKU.
+- `references/aku-workflow.md` — arbetskraftsbegrepp, urvalsskattningar, tidsserier, geografi och kvalitetsbegränsningar.
+- `references/commuting-workflow.md` — tabellval, pendlingsriktning, uttagsstorlek och jämförbarhet.
+- `references/household-workflow.md` — hushållsdefinition, tabellval, täckning, geografi och röjandeskydd.
+- `references/income-workflow.md` — disponibel inkomst, ekonomisk standard, prisnivå, population och jämförbarhet.
+- `references/education-workflow.md` — högsta utbildning (UREG), studiedeltagande (RPU), SUN och jämförbarhet.
+- `references/regional-accounts-workflow.md` — BRP, hushållsinkomster, löner, sysselsättning, investeringar, geografi och priser.
+- `references/national-accounts-workflow.md` — konsumtionsutgifter efter COICOP, sektorer och nämnare, löpande priser, kedjade volymer och revideringar.
+- `references/enterprise-economy-workflow.md` — företags- och verksamhetsenheter, omsättning, förädlingsvärde, produktivitet, investeringar och jämförbarhet.
+- `references/cpi-workflow.md` — KPI och närliggande mått, indexuppräkning, basårs- och klassifikationsbyten 2026 samt prisnivå.
+- `references/housing-workflow.md` — boende, bostadsbestånd, boendeutgifter, bostadsyta, trångboddhet, täckning och jämförbarhet.
+- `references/migration-workflow.md` — flyttningar, invandring, utvandring, flyttnetto, tabellval och jämförbarhet.
+- `references/pxstatspy-assessment.md` — när det valfria Pythonbiblioteket är användbart.
+- `references/OpenAPI-source.md` — källor och versionsuppgifter för det inkluderade API-kontraktet.
+- `references/PxAPI-2.yml` — ögonblicksbild av det officiella API-kontraktet.
