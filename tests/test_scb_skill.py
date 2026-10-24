@@ -98,6 +98,7 @@ def validate_references(root):
 
 def documented_topics(root, text):
     topics = set(re.findall(r"^## (.+?) starter method\s*$", text, re.M))
+    topics.update(re.findall(r"^## Grundmetod: (.+?)\s*$", text, re.M))
     for guide in (root / "references").glob("*-workflow.md"):
         if guide.name == "semantic-workflow.md":
             continue  # General search method, not a statistical subject.
@@ -113,16 +114,28 @@ def validate_topics(root, text):
     topics = documented_topics(root, text)
     assert topics, "No documented statistical subjects found"
     for topic in topics:
-        # Existing description uses geography for the geodata route.
-        terms = ("geodata", "geography") if topic == "geodata" else (topic,)
+        # Reference guides may stay English while SKILL.md is Swedish.
+        aliases = {
+            "population": ("befolkning",),
+            "household": ("hushållsstatistik",),
+            "household statistics": ("hushållsstatistik",),
+            "income": ("hushållens inkomster",),
+            "household income": ("hushållens inkomster",),
+            "education": ("utbildning och studiedeltagande",),
+            "education and study participation": ("utbildning och studiedeltagande",),
+            "housing": ("boende och bostadsförhållanden",),
+            "commuting": ("pendling",),
+            "geodata": ("geografi", "geography"),
+        }
+        terms = (topic,) + aliases.get(topic, ())
         assert any(re.search(r"\b" + re.escape(term) + r"\b", description) for term in terms), (
             "Description does not mention documented topic: {}".format(topic)
         )
 
 
 def validate_steps(text):
-    match = re.search(r"^## Workflow\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
-    assert match, "Missing Workflow section"
+    match = re.search(r"^## (?:Arbetsgång|Workflow)\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+    assert match, "Missing Arbetsgång/Workflow section"
     numbers = [int(n) for n in re.findall(r"^(\d+)\. ", match[1], re.M)]
     assert numbers and numbers == list(range(1, len(numbers) + 1)), (
         "Workflow steps must be sequential from 1: {}".format(numbers)
