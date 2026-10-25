@@ -2,7 +2,7 @@
 
 En fristående ChatGPT-färdighet som hjälper till att hitta, granska och hämta statistik från Statistiska centralbyrån (SCB). Färdigheten använder SCB:s PxWebApi v2 och, för vissa geografiska frågor, SCB:s öppna geodata.
 
-Den hjälper ChatGPT att välja en relevant tabell, kontrollera metadata och kategorier, bygga ett giltigt urval och förklara vad statistiken visar. Den är ett instruktioner- och referenspaket – inte en egen statistiktjänst eller en garanti för att ChatGPT alltid väljer rätt tabell eller räknar rätt.
+Den hjälper ChatGPT att välja en relevant tabell, kontrollera metadata och kategorier, bygga ett giltigt urval och förklara vad statistiken visar. Den är ett instruktions- och referenspaket – inte en egen statistiktjänst eller en garanti för att ChatGPT alltid väljer rätt tabell eller räknar rätt.
 
 ## Statistikområden
 
