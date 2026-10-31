@@ -8,6 +8,8 @@ Dessa är beteendeacceptansfall, inte bevis för korrekta statistiska svar. Kör
 
 **Förväntat:** Före alternativ BNP-sökning meddelas att specifikt dokumenterat BNP-stöd saknas (nationalräkenskapsstödet avser hushållskonsumtion). AKU stöds och ska faktiskt hämtas via PxWebApi v2 med kontrollerade metadata, ålder, period och säsongrensning. Om API inte fungerar redovisas felet; inga webbvärden utges för API-data. BNP och AKU kan analyseras som skilda konjunkturindikatorer men inte summeras. För att fortsätta med BNP utan metodguide krävs användarens medgivande.
 
+**Obligatoriska kontroller för godkänt SCB-C01:** (1) produktstödsprövning innan alternativ BNP-sökning; (2) ett **faktiskt, lyckat PxWebApi v2-dataanrop** för AKU, inte enbart tabellsökning eller metadata; (3) kontrollerad ålder/population, period, frekvens och säsongrensning; (4) redovisad tabellidentifierare, endpoint eller reproducerbar API-fråga, urval/värdekoder, API-status och observerade värden; (5) webbpubliceringar används inte som ersättningskälla utan uttryckligt godkännande. Om dataanropet misslyckas ska inga AKU-värden utges som API-observationer. Bedöm **underkänt för API-integrationsdelen** om svaret bygger på webbsökning eller saknar belägg för genomfört dataanrop, även om siffrorna verkar rimliga. Enbart modellens påstående om lyckat API-anrop räcker inte som oberoende bevis; kontrollera verktygsspår eller reproducerbart anrop och råsvar. Dokumentera produktstödsprövning och API-integration som separata delresultat.
+
 ## SCB-C02 — Jämförbara arbetslöshetsperioder
 
 **Fråga:** Jämför arbetslösheten enligt AKU för samma åldersgrupp och säsongrensningsstatus under två jämförbara perioder.
