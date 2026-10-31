@@ -292,3 +292,14 @@ def test_new_subject_guide_requires_description_update(tmp_path):
     )
     with pytest.raises(AssertionError, match="education"):
         validate_topics(tmp_path, "---\nname: example\ndescription: population\n---\n")
+
+
+def test_cross_product_acceptance_cases_registered():
+    """Offline registration check only; does not validate API values or assistant behavior."""
+    skill = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+    cases = (SKILL / "docs" / "comparability-acceptance.md").read_text(encoding="utf-8")
+    assert "docs/comparability-acceptance.md" in skill
+    for case in ("SCB-C01", "SCB-C02", "SCB-C03", "SCB-C04"):
+        assert "## " + case + " " in cases
+    assert "före" in skill.casefold() and "produktstöd" in skill.casefold()
+    assert "AKU" in cases and "BAS" in cases and "BNP" in cases
