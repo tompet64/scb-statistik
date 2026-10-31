@@ -122,3 +122,8 @@ Uppdatera `SKILL.md` i samma ändring varje gång en statistikprodukt eller ett 
 - `references/pxstatspy-assessment.md` — när det valfria Pythonbiblioteket är användbart.
 - `references/OpenAPI-source.md` — källor och versionsuppgifter för det inkluderade API-kontraktet.
 - `references/PxAPI-2.yml` — ögonblicksbild av det officiella API-kontraktet.
+
+
+## Acceptansfall för jämförbarhet
+
+Se [acceptansfallen](docs/comparability-acceptance.md) för separata prov av jämförbara och icke jämförbara statistikprodukter. Dessa fall är ännu inte ett bevis på genomförda API- eller beteendetester.
