@@ -7,6 +7,15 @@ description: Hitta, tolka, validera och hämta SCB-statistik via PxWebApi v2 och
 
 Använd färdigheten för att omsätta en statistikfråga på svenska till en spårbar SCB-tabell och ett giltigt urval i PxWebApi v2. Tolka frågans innebörd själv; SCB:s parameter `query` söker efter nyckelord och är inte en semantisk sökmotor.
 
+
+## Kontroll av produktstöd före uttag
+
+Identifiera samtliga efterfrågade statistikprodukter och kontrollera först om de omfattas av dokumenterat produktstöd och relevant metodguide. Om stöd saknas för en produkt, meddela användaren detta **innan** alternativ tabellsökning, webbsökning eller datahämtning för den produkten. Skilj bristande färdighetsstöd från avsaknad av statistik hos SCB. Fråga om användaren vill gå vidare utan dokumenterat metodstöd; ersätt aldrig tyst med webbuppgifter. Vid delvis stöd: redovisa gränsen, men fullfölj API-uttag för de produkter som stöds. En identifierad AKU-tabell ska således följas av ett faktiskt API-uttag och validering, inte enbart en hänvisning till statistiknyheter. Misslyckade API-anrop redovisas öppet.
+
+## Syfte: jämförbara statistikprodukter
+
+Färdigheten ska snabbt hitta rätt produkt, variabel, mätvärde och urval, besvara enkla frågor och möjliggöra tabeller och diagram. Den ska dessutom kunna hämta flera statistikprodukter och jämföra eller kombinera dem **endast när deras definitioner är förenliga**. Kontrollera statistisk enhet, population, geografisk täckning, referensperiod och frekvens, mätstorhet och enhet, prisbas, säsongrensning, klassifikation, metodförändringar och preliminär/slutlig status. Harmonisering genom dokumenterad omräkning eller aggregering är tillåten när den är metodologiskt försvarbar; redovisa transformation och källvärden. Kedjade volymmått, överlappande populationer och olika arbetslöshetsdefinitioner får inte summeras som om de vore jämförbara. Vid oförenlighet: visa serierna separat, förklara konkret varför direkt jämförelse eller sammanläggning är missvisande och erbjud en alternativ analys. Skilj alltid observerade värden från beräknade härledningar. Diagram får inte antyda jämförbarhet som saknas.
+
 ## Arbetsgång
 
 1. Identifiera mått eller begrepp, population eller statistisk enhet, geografi, tidsperiod, frekvens, redovisningsgrupper och önskad enhet. Bevara användarens avsikt: exempelvis är `folkmängd` ett bestånd vid en tidpunkt, medan `folkökning` är en förändring eller ett flöde.
